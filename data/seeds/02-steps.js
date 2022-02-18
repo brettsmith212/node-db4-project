@@ -3,7 +3,7 @@ exports.seed = function (knex, Promise) {
     {
       step_number: 1,
       step_instructions: "first step instructions",
-      ingredients_id: 1,
+      recipe_id: 1,
     },
   ]);
 };
