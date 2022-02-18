@@ -13,10 +13,37 @@ async function getRecipeById(recipe_id) {
     recipe_id: result[0].recipe_id,
     recipe_name: result[0].recipe_name,
     created_at: result[0].created_at,
-    steps: result[0].step_id,
+    steps: [],
   };
 
-  return result;
+  if (result[0].step_id === null) {
+    return recipe;
+  }
+
+  for (let step of result) {
+    recipe.steps.push({
+      step_id: step.step_id,
+      step_number: step.step_number,
+      step_instructions: step.step_instructions,
+      ingredients: [],
+    });
+  }
+
+  if (result[0].ingredient_id === null) {
+    return recipe;
+  }
+
+  let count = 0;
+  for (let ingredient of result) {
+    recipe.steps[count].ingredients.push({
+      ingredient_id: ingredient.ingredients_id,
+      ingredient_name: ingredient.ingredient_name,
+      ingredient_quantity: ingredient.ingredient_quantity,
+    });
+    count++;
+  }
+
+  return recipe;
 }
 
 module.exports = {
